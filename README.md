@@ -1,4 +1,4 @@
-# El Gran Desafío
+# Pasapalabra · El Gran Desafío
 
 Rosco multijugador de Biología para 1º año (Salta). Dos estudiantes compiten **en línea, cada uno desde su compu**, con el mismo banco de conceptos que el rosco de la cátedra. También se puede jugar de a dos en la misma compu o contra Boti.
 
