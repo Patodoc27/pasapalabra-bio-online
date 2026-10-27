@@ -14,7 +14,7 @@ Un solo archivo: `index.html` (GitHub Pages: https://patodoc27.github.io/pasapal
 
 ## Tiempos
 
-- **Normal · 7 min** o **Rápido · 5 min** de partida (el reloj corre solo mientras alguien responde), o **Sin reloj · práctica**.
+- **Cada jugador tiene su propio reloj**: **Normal · 4 min** o **Rápido · 3 min** cada uno, que corre solo durante su turno (nadie gasta el tiempo del otro). Si a uno se le termina, el otro sigue con las letras que quedan. También hay **Sin reloj · práctica**.
 - **Cada letra tiene su propio tiempo**, el que necesita un estudiante de 12-13 años: leer la definición (~2,5 palabras/s; si la lee la voz, ese rato no cuenta), pensar (~8 s) y escribir la palabra (~1,3 caracteres/s). Redondeado a 5 s, entre 15 y 45 s (en Rápido, 20 % menos). Si se agota, la letra vuelve como pasapalabra; si ya había vuelto, cuenta como error.
 
 ## Cómo funciona la conexión
