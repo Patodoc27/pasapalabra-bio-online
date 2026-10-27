@@ -1,6 +1,6 @@
 # Licencia
 
-El Gran Desafío — rosco multijugador de biología para 1º año.
+Pasapalabra multijugador — rosco multijugador de biología para 1º año.
 
 Copyright © 2026 **Patricia Inés Castro** — Salta, Argentina.
 

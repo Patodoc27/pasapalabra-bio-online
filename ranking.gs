@@ -1,8 +1,8 @@
 /* =====================================================
-   El Gran Desafío — Ranking del cole
+   Pasapalabra multijugador — Ranking del cole
    Pegar este código completo en Extensiones →
    Apps Script, dentro de tu planilla
-   "El Gran Desafío — Participación".
+   "Pasapalabra multijugador — Participación".
    Ver instrucciones_ranking.md para el paso a paso.
    ===================================================== */
 
@@ -15,7 +15,7 @@ function sheet_() {
   if (s.getLastRow() === 0) {
     s.appendRow(["fecha", "nombre", "seccion", "avatar", "modo",
                  "aciertos", "errores", "pasadas", "total",
-                 "porcentaje", "tiempo_seg", "inicio"]);
+                 "porcentaje", "tiempo_seg", "inicio", "puntaje"]);
   }
   return s;
 }
@@ -35,7 +35,8 @@ function doPost(e) {
     +d.total || 24,
     Math.max(0, Math.min(100, +d.porcentaje || 0)),
     d.tiempo_seg === "" || d.tiempo_seg === undefined ? "" : Math.max(0, +d.tiempo_seg || 0),
-    String(d.inicio || "").slice(0, 4)
+    String(d.inicio || "").slice(0, 4),
+    Math.max(0, Math.min(9999, +d.puntaje || 0))
   ]);
   return ContentService
     .createTextOutput(JSON.stringify({ ok: true }))
@@ -54,7 +55,7 @@ function norma_(s) {
    (premia la constancia); en empate gana quien jugó menos partidas.
    Columnas: A fecha · B nombre · C seccion · D avatar · E modo ·
              F aciertos · G errores · H pasadas · I total ·
-             J porcentaje · K tiempo_seg · L inicio              */
+             J porcentaje · K tiempo_seg · L inicio · M puntaje              */
 function doGet(e) {
   const top = Math.min(+(e && e.parameter && e.parameter.top || 15), 200);
   const filas = sheet_().getDataRange().getValues().slice(1);

@@ -6,13 +6,13 @@ Dos pasos: **(A)** conectar la planilla que guarda los puntajes y **(B)** subir 
 
 ## A) El script dentro de tu planilla
 
-Ya tenés la planilla "El Gran Desafío — Participación" con la pestaña `partidas` y las 12 columnas. Ahora falta el script que recibe los datos del juego:
+Ya tenés la planilla "Pasapalabra multijugador — Participación" con la pestaña `partidas` y las 12 columnas. Ahora falta el script que recibe los datos del juego:
 
 1. Abrí tu planilla → arriba: **Extensiones → Apps Script**. Se abre un editor.
 2. Borrá el código que trae y **pegá todo el contenido de `ranking.gs`** (el archivo que te pasé). Guardá con el ícono de disquete.
 3. Arriba a la derecha: **Implementar → Nueva implementación**.
 4. En "Tipo" elegí **Aplicación web**:
-   - Descripción: `Ranking El Gran Desafío`
+   - Descripción: `Ranking Pasapalabra multijugador`
    - **Ejecutar como:** `Yo (tu correo)`
    - **Quién puede acceder:** `Cualquier persona`
 5. **Implementar**. Te va a pedir autorizar:
@@ -31,7 +31,7 @@ Ese es el link que compartís con los estudiantes (por WhatsApp, aula virtual, Q
 
 ## Cómo funciona después
 
-- Al terminar cada partida, el juego **envía automáticamente** a la pestaña `partidas`: fecha, nombre, sección, avatar, modo, aciertos, errores, pasadas, total, porcentaje, tiempo en segundos y letra de inicio.
+- Al terminar cada partida, el juego **envía automáticamente** a la pestaña `partidas`: fecha, nombre, sección, avatar, modo, aciertos, errores, pasadas, total, porcentaje, tiempo de respuesta en segundos, letra de inicio y puntaje (aciertos × 100 + bonus de rapidez).
 - La pestaña `resumen` (con fórmulas) muestra por estudiante: partidas jugadas, aciertos acumulados, porcentaje promedio y última fecha.
 - La pantalla final del juego muestra el **Ranking del cole** (🥇🥈🥉 por aciertos acumulados — premia la constancia; en empate gana quien jugó menos) y el botón **"🏆 Resultados y ranking"** abre el ranking completo **separado por sección** (1° A, 1° B…).
 - En el inicio aparece un mini top 5 para picarlos antes de jugar.

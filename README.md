@@ -1,4 +1,4 @@
-# Pasapalabra · El Gran Desafío
+# Pasapalabra multijugador
 
 Rosco multijugador de Biología para 1º año (Salta). Dos estudiantes compiten **en línea, cada uno desde su compu**, con el mismo banco de conceptos que el rosco de la cátedra. También se puede jugar de a dos en la misma compu o contra Boti.
 
@@ -16,6 +16,12 @@ Un solo archivo: `index.html` (GitHub Pages: https://patodoc27.github.io/pasapal
 
 - **Cada jugador tiene su propio reloj**: **Normal · 4 min** o **Rápido · 3 min** cada uno, que corre solo durante su turno (nadie gasta el tiempo del otro). Si a uno se le termina, el otro sigue con las letras que quedan. También hay **Sin reloj · práctica**.
 - **Cada letra tiene su propio tiempo**, el que necesita un estudiante de 12-13 años: leer la definición (~2,5 palabras/s; si la lee la voz, ese rato no cuenta), pensar (~8 s) y escribir la palabra (~1,3 caracteres/s). Redondeado a 5 s, entre 15 y 45 s (en Rápido, 20 % menos). Si se agota, la letra vuelve como pasapalabra; si ya había vuelto, cuenta como error.
+
+## Puntaje y podio
+
+- Gana quien tiene **más aciertos**; con igual cantidad, gana quien **usó menos tiempo de respuesta** (se mide en décimas de segundo, desde que se habilita la respuesta hasta que responde).
+- **Puntaje = aciertos × 100 + bonus de rapidez (0 a 99)** según cuánto reloj le sobró. El bonus nunca llega a 100: el tiempo solo desempata, nunca le gana a un acierto.
+- Al final aparece el **podio**: medalla dorada (1°) arriba y plateada (2°).
 
 ## Cómo funciona la conexión
 
