@@ -9,7 +9,7 @@ Un solo archivo: `index.html` (GitHub Pages: https://patodoc27.github.io/pasapal
 1. Elegí **En línea**, escribí tu nombre, avatar y sección.
 2. Dejá el código vacío y tocá **Crear sala**: aparece un código de 4 caracteres.
 3. Tu rival escribe ese código (o toca la sala en la lista de "Salas esperando rival") y entra.
-4. Quien creó la sala toca **Sortear rosco y empezar**. Se turnan letra por letra; quien no tiene el turno ve la letra, pero no la definición.
+4. Quien creó la sala toca **Sortear rosco y empezar**. Se turnan letra por letra; quien espera ve y escucha la definición del rival, lo que va escribiendo y si acierta (si dice pasapalabra, la respuesta no se muestra).
 5. Al final se ve el duelo, se puede **Pedir revancha** o **Practicar las que costaron** (a solas).
 
 ## Tiempos

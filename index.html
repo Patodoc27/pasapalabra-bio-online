@@ -187,6 +187,8 @@ input::placeholder{color:var(--placeholder)}
 @keyframes pop{from{transform:scale(.35);opacity:0}60%{transform:scale(1.08);opacity:1}to{transform:scale(1)}}
 .confeti{position:fixed;top:-6vh;z-index:60;pointer-events:none;border-radius:2px;
   animation:caeConfeti var(--t,3.4s) cubic-bezier(.25,.6,.55,1) forwards}
+.letra-cae{background:none!important;font-family:var(--display);font-weight:800;line-height:1;
+  -webkit-text-stroke:1px rgba(10,20,60,.25);text-shadow:0 3px 6px rgba(20,40,90,.22)}
 @keyframes caeConfeti{to{transform:translateY(120vh) rotate(var(--rot,540deg));opacity:.9}}
 #empieza-quien{font-family:var(--display);font-weight:700;font-size:clamp(18px,2.6vw,26px);color:var(--gris);margin-top:6px}
 
@@ -543,13 +545,13 @@ body.online #chips-sec .chip{width:auto!important;flex:1}
       <summary>Reglas del juego</summary>
       <ul>
         <li>El turno pasa siempre al otro jugador, incluso cuando dicen Pasapalabra.</li>
-        <li>La consigna aparece recién cuando el jugador de turno toca «Listo»: nadie ve la definición del otro.</li>
+        <li>De a dos en la misma compu, la consigna aparece recién cuando el jugador de turno toca «Listo».</li>
         <li>Cada acierto se pinta del color de quien respondió ✓, el error va en rosa ✕ y el pasapalabra en celeste ↻.</li>
         <li>Las letras celestes vuelven y las responde quien tenga el turno en ese momento.</li>
         <li>El reloj se detiene mientras se pasan el teclado y mientras se lee el resultado de la jugada.</li>
         <li>Cada jugador tiene su propio reloj (4 min en Normal, 3 en Rápido) y corre solo durante su turno. Si a uno se le termina, el otro sigue con las letras que quedan hasta cerrar el rosco o quedarse también sin tiempo.</li>
         <li>Cada letra tiene su propio tiempo (la barra debajo de la respuesta), calculado según lo que lleva leer la definición, pensar y escribir esa palabra. Si se termina, la letra vuelve como pasapalabra; si ya había vuelto, cuenta como error.</li>
-        <li>En línea cada uno juega desde su compu: mientras responde tu rival ves la letra, pero no su definición. Gana quien acierta más.</li>
+        <li>En línea cada uno juega desde su compu: mientras responde tu rival, ves y escuchás su definición, lo que va escribiendo y si acierta. Si dice pasapalabra, la respuesta no se muestra. Gana quien acierta más; si empatan, quien respondió más rápido.</li>
         <li>Cada partida sortea palabras y letra de arranque: nunca se repite el mismo rosco ni el mismo arranque.</li>
         <li>Las palabras se escriben con tilde y con ñ. Si la palabra es la correcta pero está mal acentuada, avisa y se puede corregir sin perder la letra.</li>
         <li>En modo práctica, sin reloj, el primer error da una pista y una segunda oportunidad.</li>
@@ -919,6 +921,18 @@ const modoPractica=()=>sinReloj||recuperacion;
 const esBot=()=>conBot&&turno===1;
 const autoTurno=()=>conBot||enLinea||solo;
 const luego=(f,ms)=>{const t=setTimeout(f,ms);timers.push(t);return t;};
+function lluviaLetras(){   // letras del rosco que caen como papelitos cuando se arma el podio
+  const cols=["#22E3D6","#FF4FA3","#4D9BFF","#0A9E96","#E01480","#2446C8"],capa=document.createElement("div");
+  for(let i=0;i<70;i++){const s=document.createElement("b");s.className="confeti letra-cae";
+    s.textContent=LETRAS[Math.floor(Math.random()*LETRAS.length)];
+    s.style.left=(Math.random()*100)+"vw";s.style.color=cols[i%cols.length];
+    s.style.fontSize=(22+Math.random()*34)+"px";
+    s.style.setProperty("--rot",(Math.random()*540-270)+"deg");
+    s.style.setProperty("--t",(3+Math.random()*2.6)+"s");
+    s.style.animationDelay=(Math.random()*1.4)+"s";
+    capa.appendChild(s);}
+  document.body.appendChild(capa);setTimeout(()=>capa.remove(),7600);
+}
 function confeti(){  // papelitos de colores al ganarle al bot: caen y desaparecen solos
   const cols=["#22E3D6","#FF4FA3","#4D9BFF","#7FE8DF","#FFB3D4","#8FB4FF"],capa=document.createElement("div");
   for(let i=0;i<120;i++){const p=document.createElement("i");p.className="confeti";
@@ -999,7 +1013,7 @@ $("btn-voz").addEventListener("click",()=>{
   if(lectura)leerConsigna();else{callar();correrPendiente();}
 });
 function leerConsigna(){
-  if(!jugando||!miTurno())return;
+  if(!jugando)return;
   const it=items[idx];if(!it)return;
   const NOMBRE_LETRA={A:"a",B:"be",C:"ce",D:"de",E:"e",F:"efe",G:"ge",H:"hache",I:"i",J:"jota",L:"ele",M:"eme",N:"ene","Ñ":"eñe",O:"o",P:"pe",Q:"cú",R:"ere",S:"ese",T:"te",U:"u",V:"uve",X:"equis",Y:"i griega"};
   const cons=(it.m===E?"Empieza por la letra ":"Contiene la letra ")+(NOMBRE_LETRA[it.letra]||it.letra);
@@ -1285,7 +1299,7 @@ function habilitar(v){
 function mostrarLetra(){
   const it=items[idx];
   $("consigna").textContent=(it.m===E?"Empieza por ":"Contiene la ")+it.letra+(estado[idx]==="pasada"?" ↻":"");
-  $("definicion").innerHTML=(enLinea&&!miTurno())?'<span class="def-oculta">La definición la ve solo '+escH(nombreBonito(nombres[turno]))+'. Cuando responda vas a ver el resultado.</span>':it.d;
+  $("definicion").innerHTML=it.d;
   $("entrada").value="";$("feedback").textContent="";$("feedback").className="feedback";
   pintar();leerConsigna();
 }
@@ -1517,7 +1531,7 @@ function terminar(motivo){
 
   cortarTiempo();
   $("duelo").className="podio";$("duelo").style.display=(conBot||enLinea)?"flex":"none";
-  if(conBot||enLinea)$("duelo").innerHTML=podio();
+  if(conBot||enLinea){$("duelo").innerHTML=podio();luego(lluviaLetras,400);}
   $("aportes").innerHTML=conBot
     ? "Resolviste <b>"+puntos[0]+"</b> conceptos y "+nombres[1]+" resolvió <b>"+puntos[1]+"</b>. Entre los dos cerraron <b>"+ok+"</b> de "+n+"."
     : nombres[0]+" aportó <b>"+puntos[0]+"</b> respuestas · "+nombres[1]+" aportó <b>"+puntos[1]+"</b> respuestas · juntos resolvieron <b>"+ok+"</b> conceptos.";
@@ -1865,7 +1879,7 @@ function redMsg(ev,p){
   if(ev==="tl"){if(!miTurno()&&p.i===idx)correrBarra(+p.s||0);return;}
   if(ev==="reloj"){if(!miTurno()&&typeof p.r==="number"){const j=p.j===1?1:0;rel[j]=p.r;relojUI();
     if(p.r<=10&&p.r>0)tic(true);}return;}
-  if(ev==="tec"){if(!miTurno()&&jugando&&!bloqueado)rivalEscribe();return;}
+  if(ev==="tec"){if(!miTurno()&&jugando&&!bloqueado){$("entrada").value=String(p.v||"").replace(/[<>]/g,"").slice(0,40);rivalEscribe();}return;}
   if(ev==="fin"){if(Array.isArray(p.rel))rel=[+p.rel[0]||0,+p.rel[1]||0];if(Array.isArray(p.us))usado=[+p.us[0]||0,+p.us[1]||0];if(partidaViva)terminar(String(p.m||"Partida terminada.").slice(0,120));return;}
 }
 
@@ -1963,9 +1977,11 @@ function rivalEscribe(){
   clearTimeout(escribeT);escribeT=setTimeout(()=>{if(jugando&&!miTurno()&&!bloqueado)
     $("feedback").innerHTML='<span class="pensando">'+escH(nombreBonito(nombres[turno]))+' está pensando <i></i><i></i><i></i></span>';},2500);
 }
-let tecT=0;
+let tecT=0,tecPend=null;
+function mandarTecleo(){tecPend=null;tecT=Date.now();if(enLinea&&miTurno()&&jugando&&!bloqueado)redEnviar("tec",{v:$("entrada").value.slice(0,40)});}
 $("entrada").addEventListener("input",()=>{if(!enLinea||!miTurno()||!jugando)return;
-  const t=Date.now();if(t-tecT>900){tecT=t;redEnviar("tec",{});}});
+  if(tecPend)return;const falta=300-(Date.now()-tecT);
+  if(falta<=0)mandarTecleo();else tecPend=setTimeout(mandarTecleo,falta);});
 
 /* --- estado completo: para quien se reconecta o recarga la página --- */
 function redMandarEstado(){
